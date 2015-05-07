@@ -7,7 +7,9 @@ use Flame\Classes\Http\Exception\Error4xx;
 abstract class BaseController extends \Flame\Classes\Di\Di
 {
     private $baseDir;
-	
+
+    protected $initObj;
+
 	const JSON_SUCCESS = true;
 	const JSON_ERROR = false;
 
@@ -16,6 +18,11 @@ abstract class BaseController extends \Flame\Classes\Di\Di
 
     /** @var boolean ajax ли запроса */
     private $requestType;
+
+    public function __construct($routeName, $initObj)
+    {
+        $this->initObj = $initObj;
+    }
 
     /**
      * Устанавливаем тип запроса. Ajax или нет
@@ -31,6 +38,25 @@ abstract class BaseController extends \Flame\Classes\Di\Di
     {
         $this->preCallAction($methodName);
         return call_user_func_array([$this, $methodName], $matches);
+    }
+
+    public function getRoutePath($name)
+    {
+        if (!isset($this->initObj->getRouteData()[$name])) {
+            return '';
+        }
+
+        $item = $this->initObj->getRouteData()[$name];
+
+        $limit = func_num_args() - 1;
+        $url = preg_replace('/{[^}]+}/', '%s', $item['regexp'], $limit);
+
+        $args = func_get_args();
+        unset($args[0]);
+        $url = vsprintf($url, $args);
+        $url = trim($url, '$^');
+
+        return $url;
     }
 
     /**
@@ -68,7 +94,8 @@ abstract class BaseController extends \Flame\Classes\Di\Di
         return $this->baseDir.'tpl/';
     }
 
-	public function invokeError4xx($code = 404){
+	public function invokeError4xx($code = 404)
+	{
 		throw new Error4xx('Error ' . $code, $code);
 	}
 	

@@ -15,14 +15,14 @@ class Di
         $this->data = Yaml::parse($name);
     }
 
-    protected function initClass($name)
+    private function initClass($name)
     {
         if (!property_exists($this->data['class'], $name)) {
             throw new Exception\DiException('class '.$name.' not found');
         }
     }
 
-    protected function parseRes($name)
+    private function parseRes($name)
     {
         if (!isset($this->data['res'], $name)) {
             throw new Exception\DiException('Res '.$name.' not found in DI');
@@ -41,7 +41,7 @@ class Di
         return $obj;
     }
 
-    protected function parse($val)
+    private function parse($val)
     {
         if (!$val) {
             return $val;
