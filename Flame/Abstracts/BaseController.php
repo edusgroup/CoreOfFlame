@@ -94,15 +94,15 @@ abstract class BaseController extends \Flame\Classes\Di\Di
         return $this->baseDir.'tpl/';
     }
 
-	public function invokeError4xx($code = 404)
+	public function invokeError4xx($msg = '', $code = 404)
 	{
-		throw new Error4xx('Error ' . $code, $code);
+		throw new Error4xx('Error ' . $code . ' Msg: ' . $msg, $code);
 	}
 
-    public function ifNullInvokeError4xx($data, $code = 404)
+    public function ifNullInvokeError4xx($data, $msg = '', $code = 404)
     {
         if (!$data) {
-            $this->invokeError4xx($code);
+            $this->invokeError4xx($msg, $code);
         }
     }
 	

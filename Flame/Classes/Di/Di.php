@@ -67,36 +67,52 @@ class Di
         return $val;
     }
 
+    /**
+     * Получае с помощью DI объект
+     *
+     * @param $name Название объекта из di.yaml
+     * @return object Запрашиваемый объект
+     * @throws Exception\DiException В случае ошибки
+     */
 	public function fabric($name)
 	{
+        // Если объект найден, то возвращаем его
         if (isset($this->objList[$name])) {
             return $this->objList[$name];
         }
 
-        if (!isset($this->data['class'], $name)) {
+        // Если имя не найдено
+        if (!isset($this->data['class'][$name])) {
             throw new Exception\DiException('Name '.$name.' not found in DI');
         }
 
+        // Если это не массив, то это неправильный формат
         if (!is_array($this->data['class'][$name])) {
             throw new Exception\DiException('Name ['.$name.'] is not array DI');
         }
 
+        // Если класс не задан
         if (!isset($this->data['class'][$name]['class'])) {
             throw new Exception\DiException('Name ['.$name.'] don\'t have class name');
         }
 
+        // получаем класс
         $className = $this->data['class'][$name]['class'];
 
+        // Парсим параметры для создания
         $param = '';
         if (isset($this->data['class'][$name]['param'])) {
             $param = $this->parse($this->data['class'][$name]['param']);
         }
 
+        // Если это не массив, то нужно создать массив
         if (!is_array($param)) {
             $param = [$param];
         }
 
+        // Создаём класс
         $ref = new \ReflectionClass($className);
-        return $this->objList[$name] = $ref->newInstanceArgs($param);
+        $this->objList[$name] = $ref->newInstanceArgs($param);
+        return $this->objList[$name];
 	}
 }
