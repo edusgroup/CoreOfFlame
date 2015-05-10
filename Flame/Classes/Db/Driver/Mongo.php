@@ -23,9 +23,9 @@ class Mongo extends Driver {
         return $this;
     }
 
-    public function selectAll($field, $where, $order = [])
+    public function selectAll($fields, $where, $order = [])
     {
-        return $this;
+        return $this->select($fields)->where($where)->queryAll();
     }
 
     public function db($name)
@@ -61,6 +61,9 @@ class Mongo extends Driver {
 
     public function queryAll()
     {
-
+        return $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->find(
+            $this->query,
+            $this->fields
+        );
     }
 } 

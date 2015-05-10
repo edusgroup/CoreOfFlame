@@ -98,6 +98,13 @@ abstract class BaseController extends \Flame\Classes\Di\Di
 	{
 		throw new Error4xx('Error ' . $code, $code);
 	}
+
+    public function ifNullInvokeError4xx($data, $code = 404)
+    {
+        if (!$data) {
+            $this->invokeError4xx($code);
+        }
+    }
 	
 	public abstract function preInitCommon($methodName, $matches);
 	public abstract function preRenderCommon(\Twig_Environment $twig, &$tplName, &$varible);
