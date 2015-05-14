@@ -17,6 +17,20 @@ class Mongo extends Driver {
         $this->dbName = $dbName;
     }
 
+    public function update($fields, $where)
+    {
+        return $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->update(
+            $where,
+            $fields,
+            ['upsert' => true]
+        );
+    }
+
+    public function insert($fields)
+    {
+        $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->insert($fields);
+    }
+
     public function table($tableName)
     {
         $this->tableName = $tableName;

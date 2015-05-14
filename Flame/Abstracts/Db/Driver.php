@@ -44,6 +44,11 @@ abstract class Driver
      * @return array
      */
     public abstract function selectFirst($fields, $where);
+
+    public abstract function update($set, $where);
+
+    public abstract function insert($fields);
+
     /**
      * @return array
      */

@@ -11,7 +11,7 @@ class Json extends \Flame\Abstracts\Http\Response
     const STATUS_ERROR = false;
     const STATUS_SUCCESS = true;
 
-	public function __construct($data, $status, $errorMsg = '')
+	public function __construct($data, $status = self::STATUS_SUCCESS, $errorMsg = '')
 	{
 		$this->data = $data;
 		$this->status = $status;
