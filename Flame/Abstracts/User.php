@@ -16,17 +16,18 @@ abstract class User
     use MagicAccess;
 
     const USER_SESSION_ID = 'user.id';
-    
-	protected $_nickName_;
-	//protected $_login_;
-	protected $_email_;
-	protected $_id_;
-	
-	protected $isAuth = false;
 
-	public function isAuth()
-	{
-		return $this->isAuth;
-	}
-	public abstract function init($userDao);
+    protected $_nickName_;
+    //protected $_login_;
+    protected $_email_;
+    protected $_id_;
+
+    protected $isAuth = false;
+
+    public function isAuth()
+    {
+        return $this->isAuth;
+    }
+
+    public abstract function init($userDao);
 }

@@ -25,25 +25,28 @@ trait Session
      *
      * @param $name Имя сессии
      * @param $value Значение сессии
+     *
      * @throws \Exception Если сессия не установилась
      */
-	public function setSession($name, $value)
-	{
+    public function setSession($name, $value)
+    {
         $this->initSession();
 
-		$_SESSION[$name] = $value;
-	}
+        $_SESSION[$name] = $value;
+    }
 
     /**
      * Получаем сессию
      *
      * @param $name имя сессии
+     *
      * @return null|mixed null если ни чего не найдено
      * @throws \Exception  Если сессия не установилась
      */
     public function getSession($name)
     {
         $this->initSession();
+
         return isset($_SESSION[$name]) ? $_SESSION[$name] : null;
     }
 
@@ -54,7 +57,7 @@ trait Session
      */
     public function removeSession($name)
     {
-        if (!isset($_SESSION[$name])){
+        if (!isset($_SESSION[$name])) {
             return;
         }
 

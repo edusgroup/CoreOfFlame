@@ -3,7 +3,8 @@
 namespace Flame\Abstracts\Db;
 
 
-abstract class Dao {
+abstract class Dao
+{
     public $driver;
 
     /**
@@ -13,4 +14,4 @@ abstract class Dao {
     {
         $this->driver = $driver;
     }
-} 
+}

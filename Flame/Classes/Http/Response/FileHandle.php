@@ -2,9 +2,11 @@
 
 namespace Flame\Classes\Http\Response;
 
-class FileHandle extends \Flame\Abstracts\Http\Response
+use Flame\Abstracts\Http\Response;
+
+class FileHandle extends Response
 {
-	protected $data;
+    protected $data;
     protected $contentType;
 
     /**
@@ -12,25 +14,26 @@ class FileHandle extends \Flame\Abstracts\Http\Response
      * @param string $contentType Заголовок Content-Type
      */
     public function __construct($data, $contentType = '')
-	{
+    {
         if (!$data) {
             throw new \Exception('FileHandle $data can\'t be NULL');
         }
-		$this->data = $data;
+        $this->data = $data;
         $this->contentType = $contentType;
-	}
+    }
 
-    public function getContentType() {
+    public function getContentType()
+    {
         return $this->contentType;
     }
 
-	public function get()
-	{
+    public function get()
+    {
         if (gettype($this->data) == 'resource') {
             return $this->data;
         }
 
-        if ( !is_string($this->data)) {
+        if (!is_string($this->data)) {
             throw new \Exception('Unsupported type ' . gettype($this->data));
         }
 
@@ -39,5 +42,5 @@ class FileHandle extends \Flame\Abstracts\Http\Response
         }
 
         return fopen($this->data, 'r');
-	}
+    }
 }

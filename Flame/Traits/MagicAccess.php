@@ -3,7 +3,8 @@ namespace Flame\Traits;
 
 use Flame\Classes\Func\Exception\PropertyNotFoundException;
 
-trait MagicAccess {
+trait MagicAccess
+{
     public function __call($name, array $arguments)
     {
         $name = substr(strtolower($name), 3);
@@ -14,7 +15,7 @@ trait MagicAccess {
 
         if (!$arguments) {
             return $this->{$name};
-        }else{
+        } else {
             $this->{$name} = $arguments[0];
         }
     }

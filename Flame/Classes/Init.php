@@ -10,10 +10,10 @@ class Init
     private $routeData;
     private $vars;
 
-	public function __constructor()
-	{
-			
-	}
+    public function __constructor()
+    {
+
+    }
 
     public function getRouteData()
     {
@@ -24,42 +24,42 @@ class Init
     {
         return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
-	
-	public function makeController($name, $classAndMethod, $matches)
-	{
-		$data = explode('::', $classAndMethod);
-		if (count($data) < 2) {
-			throw new \Exception('Bad format ' . $classAndMethod . '  #bad-format-init');
-		}
+
+    public function makeController($name, $classAndMethod, $matches)
+    {
+        $data = explode('::', $classAndMethod);
+        if (count($data) < 2) {
+            throw new \Exception('Bad format ' . $classAndMethod . '  #bad-format-init');
+        }
 
         /** @var \Flame\Abstracts\BaseController $controller */
-		$controller = new $data[0]($name, $this);
-        $controller->initDi('file', 'yaml',  $_SERVER['SITE_ROOT'].'conf/di.yaml');
+        $controller = new $data[0]($name, $this);
+        $controller->initDi('file', 'yaml', $_SERVER['SITE_ROOT'] . 'conf/di.yaml');
         $controller->setBaseDir($_SERVER['SITE_ROOT']);
 
-		if (!$controller) {
-			throw new \Exception('Controller from ' . $classAndMethod . ' not found #cntrl-not-found-init');
-		}
-		
-		$methodName = $data[1];  
-		unset($data);
-		
-		if (!method_exists($controller, $methodName)) {
-			throw new \Exception('Method '.$methodName.' in '.$classAndMethod .' not found #method-not-found-init');
-		}
+        if (!$controller) {
+            throw new \Exception('Controller from ' . $classAndMethod . ' not found #cntrl-not-found-init');
+        }
 
-		$controller->preInitCommon($methodName, $matches);
+        $methodName = $data[1];
+        unset($data);
+
+        if (!method_exists($controller, $methodName)) {
+            throw new \Exception('Method ' . $methodName . ' in ' . $classAndMethod . ' not found #method-not-found-init');
+        }
+
+        $controller->preInitCommon($methodName, $matches);
         $controller->setRequestType($this->isAjaxRequest());
 
         return $controller->run($methodName, $matches);
-	}
+    }
 
     public function initRoute($storage, $format, $sourseName)
     {
         //$routeData = json_decode(file_get_contents($sourseName));
         $this->routeData = \Symfony\Component\Yaml\Yaml::parse(file_get_contents($sourseName));
-        if (!$this->routeData){
-            throw new \Exception('Conf '.$sourseName.' is bad #bad-json-conf-init');
+        if (!$this->routeData) {
+            throw new \Exception('Conf ' . $sourseName . ' is bad #bad-json-conf-init');
         }
 
         // Если запрос был сделан на главную страницу и такой контроллер есть, то вызываем его
@@ -76,15 +76,15 @@ class Init
         }
 
         // Иначем бегаем по всем роутингам и ищем подходящий
-        foreach($this->routeData as $routeName => $item) {
+        foreach ($this->routeData as $routeName => $item) {
             if (!isset($item['regexp']) || !$item['regexp']) {
-                throw new \Exception('Regexp not set in '.$routeName);
+                throw new \Exception('Regexp not set in ' . $routeName);
             }
 
             $regexp = $item['regexp'];
 
             if (isset($item['vars'])) {
-                foreach($item['vars'] as $varName => $varVal) {
+                foreach ($item['vars'] as $varName => $varVal) {
                     if ($varVal[0] == '@') {
                         $globalVarName = substr($varVal, 1);
                         if (!isset($this->vars[$globalVarName])) {
@@ -97,7 +97,7 @@ class Init
                 }
             }
 
-            if ( preg_match('#' . $regexp . '#', $_SERVER['DOCUMENT_URI'], $matches)) {
+            if (preg_match('#' . $regexp . '#', $_SERVER['DOCUMENT_URI'], $matches)) {
                 return $this->makeController($routeName, $item['controller'], $matches);
             }
         }

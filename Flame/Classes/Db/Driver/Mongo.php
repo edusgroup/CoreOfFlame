@@ -4,7 +4,8 @@ namespace Flame\Classes\Db\Driver;
 
 use Flame\Abstracts\Db\Driver;
 
-class Mongo extends Driver {
+class Mongo extends Driver
+{
     protected $mongoHandle;
 
     /**
@@ -34,6 +35,7 @@ class Mongo extends Driver {
     public function table($tableName)
     {
         $this->tableName = $tableName;
+
         return $this;
     }
 
@@ -45,18 +47,21 @@ class Mongo extends Driver {
     public function db($name)
     {
         $this->dbName = $name;
+
         return $this;
     }
 
     public function select($fields)
     {
         $this->fields = $fields;
+
         return $this;
     }
 
     public function where($query)
     {
         $this->query = $query;
+
         return $this;
     }
 

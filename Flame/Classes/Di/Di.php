@@ -70,8 +70,8 @@ class Di
     /**
      * Получае с помощью DI объект
      *
-     * @param $name Название объекта из di.yaml
-     * @return object Запрашиваемый объект
+     * @param string $name Название объекта из di.yaml
+     * @return mixed Запрашиваемый объект
      * @throws Exception\DiException В случае ошибки
      */
 	public function fabric($name)

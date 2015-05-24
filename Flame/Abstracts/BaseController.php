@@ -10,8 +10,8 @@ abstract class BaseController extends \Flame\Classes\Di\Di
 
     protected $initObj;
 
-	const JSON_SUCCESS = true;
-	const JSON_ERROR = false;
+    const JSON_SUCCESS = true;
+    const JSON_ERROR = false;
 
     const REQUEST_TYPE_AJAX = true;
     const REQUEST_TYPE_NONE_AJAX = false;
@@ -29,7 +29,7 @@ abstract class BaseController extends \Flame\Classes\Di\Di
      *
      * @param $requestType Константа REQUEST_TYPE_AJAX или REQUEST_TYPE_NONE_AJAX
      */
-	public function setRequestType($requestType)
+    public function setRequestType($requestType)
     {
         $this->requestType = $requestType;
     }
@@ -37,6 +37,7 @@ abstract class BaseController extends \Flame\Classes\Di\Di
     public function run($methodName, $matches)
     {
         $this->preCallAction($methodName);
+
         return call_user_func_array([$this, $methodName], $matches);
     }
 
@@ -76,12 +77,12 @@ abstract class BaseController extends \Flame\Classes\Di\Di
 
     public function getConfDir()
     {
-        return $this->baseDir.'conf/';
+        return $this->baseDir . 'conf/';
     }
 
     public function getDataDir()
     {
-        return $this->baseDir.'data/';
+        return $this->baseDir . 'data/';
     }
 
     public function getFileFormData($filename)
@@ -91,13 +92,13 @@ abstract class BaseController extends \Flame\Classes\Di\Di
 
     public function getTplDir()
     {
-        return $this->baseDir.'tpl/';
+        return $this->baseDir . 'tpl/';
     }
 
-	public function invokeError4xx($msg = '', $code = 404)
-	{
-		throw new Error4xx('Error ' . $code . ' Msg: ' . $msg, $code);
-	}
+    public function invokeError4xx($msg = '', $code = 404)
+    {
+        throw new Error4xx('Error ' . $code . ' Msg: ' . $msg, $code);
+    }
 
     public function ifNullInvokeError4xx($data, $msg = '', $code = 404)
     {
@@ -105,9 +106,11 @@ abstract class BaseController extends \Flame\Classes\Di\Di
             $this->invokeError4xx($msg, $code);
         }
     }
-	
-	public abstract function preInitCommon($methodName, $matches);
-	public abstract function preRenderCommon(\Twig_Environment $twig, &$tplName, &$varible);
-	protected abstract function preCallAction($methodName);
+
+    public abstract function preInitCommon($methodName, $matches);
+
+    public abstract function preRenderCommon(\Twig_Environment $twig, &$tplName, &$varible);
+
+    protected abstract function preCallAction($methodName);
 
 }

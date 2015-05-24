@@ -2,7 +2,8 @@
 
 namespace Flame\Traits;
 
-trait Twig {
+trait Twig
+{
     public function extendsTwig(&$twig)
     {
         $twig->addFunction(new \Twig_SimpleFunction('printFile', [$this, 'printFile']));

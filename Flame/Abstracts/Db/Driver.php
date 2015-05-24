@@ -13,15 +13,17 @@ abstract class Driver
     /**
      * Указываем таблицу, в которой будем искать
      *
-     * @param $tableName Название таблицы
+     * @param string $tableName Название таблицы
+     *
      * @return $this
      */
     public abstract function table($tableName);
 
     /**
-     * @param $field
-     * @param $where
+     * @param array $field
+     * @param array $where
      * @param array $order
+     *
      * @return array Выбранные данные
      */
     public abstract function selectAll($field, $where, $order = []);
@@ -30,6 +32,7 @@ abstract class Driver
      * @return array
      */
     public abstract function db($name);
+
     /**
      * @return array
      */
@@ -37,9 +40,11 @@ abstract class Driver
 
     /**
      * @param $query
+     *
      * @return $this
      */
     public abstract function where($query);
+
     /**
      * @return array
      */
