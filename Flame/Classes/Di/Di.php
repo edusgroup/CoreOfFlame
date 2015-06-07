@@ -12,7 +12,7 @@ class Di
     public function initDi($storage, $format, $name)
     {
         //$this->data = json_decode(file_get_contents($name));
-        $this->data = Yaml::parse($name);
+        $this->data = Yaml::parse(file_get_contents($name));
     }
 
     private function initClass($name)

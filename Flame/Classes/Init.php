@@ -3,6 +3,7 @@
 namespace Flame\Classes;
 
 use Flame\Classes\Http\Exception\Error4xx;
+use Symfony\Component\Yaml\Yaml;
 
 class Init
 {
@@ -57,7 +58,7 @@ class Init
     public function initRoute($storage, $format, $sourseName)
     {
         //$routeData = json_decode(file_get_contents($sourseName));
-        $this->routeData = \Symfony\Component\Yaml\Yaml::parse(file_get_contents($sourseName));
+        $this->routeData = Yaml::parse(file_get_contents($sourseName));
         if (!$this->routeData) {
             throw new \Exception('Conf ' . $sourseName . ' is bad #bad-json-conf-init');
         }
