@@ -144,4 +144,14 @@ class RequestHttp
     {
         return count($_FILES) != 0;
     }
+
+    public function getFileInfo($fileName)
+    {
+        return isset($_FILES[$fileName]) ? $_FILES[$fileName] : null;
+    }
+
+    public function getHost()
+    {
+        return $_SERVER['HTTP_HOST'];
+    }
 }

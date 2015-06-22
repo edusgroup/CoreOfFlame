@@ -90,6 +90,11 @@ abstract class BaseController extends \Flame\Classes\Di\Di
         return $this->getDataDir() . $filename;
     }
 
+    public function getPublicDir()
+    {
+        return $this->baseDir . 'public/';
+    }
+
     public function getTplDir()
     {
         return $this->baseDir . 'tpl/';
@@ -98,6 +103,11 @@ abstract class BaseController extends \Flame\Classes\Di\Di
     public function invokeError4xx($msg = '', $code = 404)
     {
         throw new Error4xx('Error ' . $code . ' Msg: ' . $msg, $code);
+    }
+
+    public function redirectToUrl($url, $code = 301)
+    {
+        header('Location: ' . $url, true, $code);
     }
 
     public function ifNullInvokeError4xx($data, $msg = '', $code = 404)
