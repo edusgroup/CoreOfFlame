@@ -8,5 +8,5 @@ spl_autoload_register(function ($className) {
         $classFileName = $_SERVER['SITE_ROOT'] . 'core/' . substr($classNamePath, 5) . '.php';
     }
 
-    return include($classFileName);
+    return @include($classFileName);
 });

@@ -8,6 +8,12 @@ trait Twig
     {
         $twig->addFunction(new \Twig_SimpleFunction('printFile', [$this, 'printFile']));
         $twig->addFunction(new \Twig_SimpleFunction('route', [$this, 'route']));
+        $twig->addFunction(new \Twig_SimpleFunction('repository', [$this, 'repository']));
+    }
+
+    public function repository($name, $type = '')
+    {
+        return $name;
     }
 
     public function route($name)

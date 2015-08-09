@@ -154,4 +154,8 @@ class RequestHttp
     {
         return $_SERVER['HTTP_HOST'];
     }
+
+    public function getPath(){
+        return $_SERVER['DOCUMENT_URI'];
+    }
 }

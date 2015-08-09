@@ -53,6 +53,7 @@ abstract class Driver
     public abstract function update($set, $where);
 
     public abstract function insert($fields);
+    public abstract function save($fields);
 
     /**
      * @return array

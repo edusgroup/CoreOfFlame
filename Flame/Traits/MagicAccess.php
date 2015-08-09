@@ -8,7 +8,7 @@ trait MagicAccess
     public function __call($name, array $arguments)
     {
         $name = substr(strtolower($name), 3);
-        $name = '_' . $name . '_';
+        $name = $name . '_';
         if (!property_exists($this, $name)) {
             throw new \Flame\Classes\Func\Exception\PropertyNotFoundException();
         }

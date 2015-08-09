@@ -23,8 +23,8 @@ trait Session
     /**
      * Устанавливаем переменнную сессии
      *
-     * @param $name Имя сессии
-     * @param $value Значение сессии
+     * @param string $name Имя сессии
+     * @param mixed $value Значение сессии
      *
      * @throws \Exception Если сессия не установилась
      */
@@ -38,7 +38,7 @@ trait Session
     /**
      * Получаем сессию
      *
-     * @param $name имя сессии
+     * @param string $name имя сессии
      *
      * @return null|mixed null если ни чего не найдено
      * @throws \Exception  Если сессия не установилась
@@ -53,7 +53,7 @@ trait Session
     /**
      * Удаляем сессию
      *
-     * @param $name Имя сессии
+     * @param string $name Имя сессии
      */
     public function removeSession($name)
     {

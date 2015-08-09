@@ -3,6 +3,7 @@
 namespace Flame\Abstracts;
 
 use Flame\Classes\Http\Exception\Error4xx;
+use Flame\Classes\Http\Response\Redirect;
 
 abstract class BaseController extends \Flame\Classes\Di\Di
 {
@@ -15,6 +16,11 @@ abstract class BaseController extends \Flame\Classes\Di\Di
 
     const REQUEST_TYPE_AJAX = true;
     const REQUEST_TYPE_NONE_AJAX = false;
+
+    const REDIRECT_TEMPORARY = 302;
+    const REDIRECT_PERMANENT = 301;
+
+    const HTTP_ERROR_CODE = 404;
 
     /** @var boolean ajax ли запроса */
     private $requestType;
@@ -41,6 +47,13 @@ abstract class BaseController extends \Flame\Classes\Di\Di
         return call_user_func_array([$this, $methodName], $matches);
     }
 
+    /**
+     * Строим URL из route.yaml
+     *
+     * @param string $name Название записи из route.yaml
+     * @param string ..., optional Переменные для URL
+     * @return string URL если запись найдена в route.yaml иначе пустая строка
+     */
     public function getRoutePath($name)
     {
         if (!isset($this->initObj->getRouteData()[$name])) {
@@ -100,17 +113,24 @@ abstract class BaseController extends \Flame\Classes\Di\Di
         return $this->baseDir . 'tpl/';
     }
 
-    public function invokeError4xx($msg = '', $code = 404)
+    public function invokeError4xx($msg = '', $code = self::HTTP_ERROR_CODE)
     {
         throw new Error4xx('Error ' . $code . ' Msg: ' . $msg, $code);
     }
 
-    public function redirectToUrl($url, $code = 301)
+    /**
+     * Редирект на другой URL
+     *
+     * @param string $url URL для редиректа
+     * @param int $code Код редиректа. @see self::REDIRECT_*
+     */
+    public function redirectToUrl($url, $code = self::REDIRECT_PERMANENT)
     {
         header('Location: ' . $url, true, $code);
+        return new Redirect();
     }
 
-    public function ifNullInvokeError4xx($data, $msg = '', $code = 404)
+    public function ifNullInvokeError4xx($data, $msg = '', $code = self::HTTP_ERROR_CODE)
     {
         if (!$data) {
             $this->invokeError4xx($msg, $code);

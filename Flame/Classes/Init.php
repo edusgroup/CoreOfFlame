@@ -3,6 +3,7 @@
 namespace Flame\Classes;
 
 use Flame\Classes\Http\Exception\Error4xx;
+use Flame\Classes\StreamReader\FabricStreamReader;
 use Symfony\Component\Yaml\Yaml;
 
 class Init
@@ -35,7 +36,8 @@ class Init
 
         /** @var \Flame\Abstracts\BaseController $controller */
         $controller = new $data[0]($name, $this);
-        $controller->initDi('file', 'yaml', $_SERVER['SITE_ROOT'] . 'conf/di.yaml');
+        $lang = 'ru';
+        $controller->initDi('file', 'yaml', $_SERVER['SITE_ROOT'], 'conf/di.yaml', $_SERVER['HTTP_HOST'], $lang);
         $controller->setBaseDir($_SERVER['SITE_ROOT']);
 
         if (!$controller) {
@@ -55,12 +57,12 @@ class Init
         return $controller->run($methodName, $matches);
     }
 
-    public function initRoute($storage, $format, $sourseName)
+    public function initRoute($storage, $format, $confFilename)
     {
-        //$routeData = json_decode(file_get_contents($sourseName));
-        $this->routeData = Yaml::parse(file_get_contents($sourseName));
+        $fabricStreamReader = new FabricStreamReader();
+        $this->routeData = Yaml::parse($fabricStreamReader->get($confFilename)->getData());
         if (!$this->routeData) {
-            throw new \Exception('Conf ' . $sourseName . ' is bad #bad-json-conf-init');
+            throw new \Exception('Conf ' . $confFilename . ' is bad #bad-json-conf-init');
         }
 
         // Если запрос был сделан на главную страницу и такой контроллер есть, то вызываем его

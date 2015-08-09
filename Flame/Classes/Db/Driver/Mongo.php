@@ -30,7 +30,7 @@ class Mongo extends Driver
 
     public function insert($fields)
     {
-        $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->insert($fields);
+        return $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->insert($fields);
     }
 
     public function table($tableName)
@@ -78,6 +78,12 @@ class Mongo extends Driver
             $this->fields
         );
     }
+
+    public function save($fields)
+    {
+        return $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->findOne($fields);
+    }
+
 
     public function queryAll()
     {

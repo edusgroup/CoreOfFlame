@@ -8,11 +8,17 @@ class Di
 {
     private $data;
     private $objList;
+    private $siteRoot = '';
+    private $httpHost = '';
+    private $lang = '';
 
-    public function initDi($storage, $format, $name)
+    public function initDi($storage, $format, $siteRoot, $diFile, $httpHost, $lang)
     {
         //$this->data = json_decode(file_get_contents($name));
-        $this->data = Yaml::parse(file_get_contents($name));
+        $this->data = Yaml::parse(file_get_contents($siteRoot . $diFile));
+        $this->siteRoot = $siteRoot;
+        $this->httpHost = $httpHost;
+        $this->lang = $lang;
     }
 
     private function initClass($name)
@@ -76,6 +82,14 @@ class Di
      */
 	public function fabric($name)
 	{
+        if ($name == 'siteRoot') {
+            return $this->siteRoot;
+        } elseif ($name == 'httpHost') {
+            return $this->httpHost;
+        } elseif ($name == 'lang') {
+          return $this->lang;
+        }
+
         // Если объект найден, то возвращаем его
         if (isset($this->objList[$name])) {
             return $this->objList[$name];

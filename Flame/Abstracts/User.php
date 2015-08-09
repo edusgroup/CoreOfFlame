@@ -17,10 +17,10 @@ abstract class User
 
     const USER_SESSION_ID = 'user.id';
 
-    protected $_nickName_;
+    protected $nickName_;
     //protected $_login_;
-    protected $_email_;
-    protected $_id_;
+    protected $email_;
+    protected $id_;
 
     protected $isAuth = false;
 
