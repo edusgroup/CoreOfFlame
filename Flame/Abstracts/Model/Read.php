@@ -17,12 +17,12 @@ abstract class Read
         return isset($this->list['_id']) ? (string) $this->list['_id'] : null;
     }
 
-    public function setList($list)
+    public function setElementsList($list)
     {
         $this->list = $list;
     }
 
-    public function getList() {
+    public function getElementsList() {
         return $this->list;
     }
 
@@ -32,7 +32,7 @@ abstract class Read
         return $this->get($name);
     }
 
-    private function get($name)
+    protected function get($name)
     {
         $name[0] = strtolower($name[0]);
         return isset($this->list[$name]) ? $this->list[$name] : null;

@@ -9,6 +9,11 @@ trait Twig
         $twig->addFunction(new \Twig_SimpleFunction('printFile', [$this, 'printFile']));
         $twig->addFunction(new \Twig_SimpleFunction('route', [$this, 'route']));
         $twig->addFunction(new \Twig_SimpleFunction('repository', [$this, 'repository']));
+        $twig->addFunction(new \Twig_SimpleFunction('resurl', [$this, 'resurl']));
+    }
+
+    public function resurl($url, $type = 'img'){
+        return $url;
     }
 
     public function repository($name, $type = '')
@@ -27,10 +32,12 @@ trait Twig
             return;
         }
 
-        if ($fr = fopen($filename, 'r')) {
-            if (fpassthru($fr)) {
+        if ($fr = @fopen($filename, 'r')) {
+            if (@fpassthru($fr)) {
                 fclose($fr);
-            }
+            };
+        } else {
+            // echo 'File not found: ' . $filename;
         }
     }
 }
