@@ -6,12 +6,12 @@ class UserInfo
 {
     public $id;
     public $email;
-    public $name;
+    public $firstName;
 
     public function __construct($data)
     {
         $this->id = $data->uid;
         $this->email = $data->email;
-        $this->name = $data->first_name;
+        $this->firstName = $data->first_name;
     }
 }

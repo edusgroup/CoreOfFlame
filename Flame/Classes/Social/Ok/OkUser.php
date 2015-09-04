@@ -1,22 +1,17 @@
 <?php
 
-namespace Flame\Classes\Social\Vk;
+namespace Flame\Classes\Social\Ok;
 
-
-class VkUser
+class OkUser
 {
-    public $id;
     public $firstName;
     public $email;
+    public $id;
 
     public function __construct($data)
     {
         $this->id = $data->uid;
         $this->firstName = $data->first_name;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
+        $this->email = $data->has_email ? null : null;
     }
 }

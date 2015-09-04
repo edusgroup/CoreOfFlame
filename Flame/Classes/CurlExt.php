@@ -53,11 +53,11 @@ class CurlExt
             curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
         }
 
-        //curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-        //curl_setopt($curl, CURLOPT_VERBOSE, true);
-        //curl_setopt($curl, CURLOPT_CERTINFO, true);
-        //$fw = fopen('Y:\CURLOPT_STDERR.txt', 'w');
-        //curl_setopt($curl, CURLOPT_STDERR, $fw);
+        curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+        curl_setopt($curl, CURLOPT_VERBOSE, true);
+        curl_setopt($curl, CURLOPT_CERTINFO, true);
+        $fw = fopen('Y:\CURLOPT_STDERR.txt', 'w');
+        curl_setopt($curl, CURLOPT_STDERR, $fw);
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
