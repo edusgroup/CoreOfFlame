@@ -64,4 +64,6 @@ abstract class Driver
      * @return array
      */
     public abstract function queryAll();
+
+    public abstract function findAndModify($fields, $update, $where, $options = []);
 }

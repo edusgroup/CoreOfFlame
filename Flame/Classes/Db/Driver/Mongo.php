@@ -20,8 +20,9 @@ class Mongo extends Driver
 
     public function update($updateFields, $where)
     {
-
-        return $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->update(
+        /** @var \MongoCollection $table */
+        $table = $this->mongoHandle->selectDB($this->dbName)->{$this->tableName};
+        return $table->update(
             $where,
             $updateFields,
             ['upsert' => true]
@@ -30,7 +31,9 @@ class Mongo extends Driver
 
     public function insert($fields)
     {
-        return $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->insert($fields);
+        /** @var \MongoCollection $table */
+        $table = $this->mongoHandle->selectDB($this->dbName)->{$this->tableName};
+        return $table->insert($fields);
     }
 
     public function table($tableName)
@@ -73,21 +76,39 @@ class Mongo extends Driver
 
     public function queryFirst()
     {
-        return $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->findOne(
+        /** @var \MongoCollection $table */
+        $table = $this->mongoHandle->selectDB($this->dbName)->{$this->tableName};
+        return $table->findOne(
             $this->query,
             $this->fields
         );
     }
 
+    public function findAndModify($fields, $update, $where, $options = [])
+    {
+        /** @var \MongoCollection $table */
+        $table = $this->mongoHandle->selectDB($this->dbName)->{$this->tableName};
+        return $table->findAndModify(
+            $where,
+            $update,
+            $fields,
+            $options
+        );
+    }
+
     public function save($fields)
     {
-        return $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->findOne($fields);
+        /** @var \MongoCollection $table */
+        $table = $this->mongoHandle->selectDB($this->dbName)->{$this->tableName};
+        return $table->findOne($fields);
     }
 
 
     public function queryAll()
     {
-        return $this->mongoHandle->selectDB($this->dbName)->{$this->tableName}->find(
+        /** @var \MongoCollection $table */
+        $table = $this->mongoHandle->selectDB($this->dbName)->{$this->tableName};
+        return $table->find(
             $this->query,
             $this->fields
         );
