@@ -29,6 +29,16 @@ class Mongo extends Driver
         );
     }
 
+    /**
+     * @param int $limit
+     * @return Mongo
+     */
+    public function limit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
     public function insert($fields)
     {
         /** @var \MongoCollection $table */
@@ -58,6 +68,8 @@ class Mongo extends Driver
     public function select($fields)
     {
         $this->fields = $fields;
+        $this->query = [];
+        $this->limit = 0;
 
         return $this;
     }
@@ -108,9 +120,15 @@ class Mongo extends Driver
     {
         /** @var \MongoCollection $table */
         $table = $this->mongoHandle->selectDB($this->dbName)->{$this->tableName};
-        return $table->find(
+        $query = $table->find(
             $this->query,
             $this->fields
         );
+
+        if ($this->limit) {
+            $query->limit($this->limit);
+        }
+
+        return $query;
     }
 } 

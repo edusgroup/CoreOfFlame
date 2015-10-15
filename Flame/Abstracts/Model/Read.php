@@ -9,12 +9,12 @@ abstract class Read
 
     public function __construct($list = [])
     {
-        $this->setList($list);
+        $this->setElementsList($list);
     }
 
-    public function getId()
+    public function getInnerId()
     {
-        return isset($this->list['_id']) ? (string) $this->list['_id'] : null;
+        return isset($this->list['_id']) ? $this->list['_id'] : null;
     }
 
     public function setElementsList($list)

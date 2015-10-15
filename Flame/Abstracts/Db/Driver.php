@@ -9,13 +9,14 @@ abstract class Driver
     protected $fields = [];
     protected $query = [];
     protected $tableName;
+    protected $limit;
 
     /**
      * Указываем таблицу, в которой будем искать
      *
      * @param string $tableName Название таблицы
      *
-     * @return $this
+     * @return Driver
      */
     public abstract function table($tableName);
 
@@ -34,7 +35,13 @@ abstract class Driver
     public abstract function db($name);
 
     /**
-     * @return array
+     * @param integer $count Количество элементов
+     * @return Driver
+     */
+    public abstract function limit($count);
+
+    /**
+     * @return Driver
      */
     public abstract function select($fields);
 

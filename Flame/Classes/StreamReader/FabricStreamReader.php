@@ -18,7 +18,7 @@ class FabricStreamReader
         }
 
         // local
-        if ($uri[0] == '/' || substr($uri, 1, 2) == ':\\' || substr($uri, 1, 2) == ':/') {
+        if ($uri[0] == '/' || substr($uri, 1, 2) == ':\\' || substr($uri, 1, 2) == ':/' || $uri[0] == '.') {
             return new FileStream($uri);
         }
 

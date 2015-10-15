@@ -2,6 +2,7 @@
 
 namespace Flame\Abstracts;
 
+use Flame\Classes\DBus\DBus;
 use Flame\Classes\Http\Exception\Error4xx;
 use Flame\Classes\Http\Response\Redirect;
 
@@ -25,9 +26,17 @@ abstract class BaseController extends \Flame\Classes\Di\Di
     /** @var boolean ajax ли запроса */
     private $requestType;
 
+    protected $dbus;
+
     public function __construct($routeName, $initObj)
     {
         $this->initObj = $initObj;
+        $this->dbus = new DBus();
+    }
+
+    public function getDBus()
+    {
+        return $this->dbus;
     }
 
     /**

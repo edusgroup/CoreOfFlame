@@ -37,8 +37,8 @@ class Init
         /** @var \Flame\Abstracts\BaseController $controller */
         $controller = new $data[0]($name, $this);
         $lang = 'ru';
-        $controller->initDi('file', 'yaml', $_SERVER['SITE_ROOT'], 'conf/di.yaml', $_SERVER['HTTP_HOST'], $lang);
-        $controller->setBaseDir($_SERVER['SITE_ROOT']);
+        $controller->initDi('file', 'yaml', SITE_ROOT, 'conf/di.yaml', HTTP_HOST, $lang);
+        $controller->setBaseDir(SITE_ROOT);
 
         if (!$controller) {
             throw new \Exception('Controller from ' . $classAndMethod . ' not found #cntrl-not-found-init');
@@ -100,7 +100,7 @@ class Init
                 }
             }
 
-            if (preg_match('#' . $regexp . '#', $_SERVER['DOCUMENT_URI'], $matches)) {
+            if (preg_match('#' . $regexp . '#', DOCUMENT_URI, $matches)) {
                 return $this->makeController($routeName, $item['controller'], $matches);
             }
         }
